@@ -99,7 +99,7 @@ useEffect(() => {
 <main
   style={{
     background: theme.bg,
-    backgroundAttachment: "fixed",
+   backgroundAttachment: "scroll",
     color: theme.text
   }}
   className="overflow-hidden page-fade"
@@ -248,7 +248,7 @@ background: scrolled
       }}
       transition={{
         duration: 12,
-        repeat: Infinity,
+       repeat: 0,
         ease: "easeInOut",
       }}
       className="absolute w-[400px] h-[400px] blur-[120px]"
@@ -416,11 +416,10 @@ background: scrolled
 
   {/* 📍 HARİTA */}
   <div className="w-full h-[240px] md:h-[320px] rounded-2xl overflow-hidden">
-    <iframe
+ <iframe
   src={siteData.iletisim.haritaEmbed}
   className="w-full h-full border-0"
-  loading="eager"
-  referrerPolicy="no-referrer-when-downgrade"
+  loading="lazy"
 />
   </div>
 

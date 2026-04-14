@@ -115,7 +115,7 @@ useEffect(() => {
 background: scrolled
   ? "rgba(255,255,255,0.95)"
   : "rgba(255,255,255,0.85)",
-    backdropFilter: "blur(12px)",
+backdropFilter: "none",
     borderBottom: scrolled ? "1px solid rgba(0,0,0,0.08)" : "none"
   }}
 >
@@ -251,7 +251,7 @@ background: scrolled
        repeat: 0,
         ease: "easeInOut",
       }}
-      className="absolute w-[400px] h-[400px] blur-[120px]"
+      className="absolute w-[400px] h-[400px] blur-[40px]"
       style={{
         background: theme.primary,
         top: "-100px",
@@ -269,10 +269,10 @@ background: scrolled
       }}
       transition={{
         duration: 14,
-        repeat: Infinity,
+        repeat: 0,
         ease: "easeInOut",
       }}
-      className="absolute w-[350px] h-[350px] blur-[120px]"
+      className="absolute w-[350px] h-[350px] blur-[40px]"
       style={{
         background: theme.glow,
         bottom: "-100px",
@@ -289,7 +289,7 @@ background: scrolled
       }}
       transition={{
         duration: 6,
-        repeat: Infinity,
+        repeat: 0,
         ease: "easeInOut",
       }}
       className="absolute w-[300px] h-[300px] blur-[100px]"
@@ -392,8 +392,8 @@ background: scrolled
         const el = document.getElementById("hizmetler")
         if (el) el.scrollIntoView({ behavior: "smooth" })
       }}
-      animate={{ y: [0, 10, 0] }}
-      transition={{ repeat: Infinity, duration: 1.5 }}
+    
+      transition={{ repeat: 0, duration: 1.5 }}
       style={{ color: theme.text + "99" }}
       className="mt-14 text-xs tracking-widest cursor-pointer hover:opacity-100 transition"
     >
@@ -463,7 +463,7 @@ background: scrolled
     <motion.div
       className="flex gap-4 whitespace-nowrap"
       animate={{ x: ["0%", "-50%"] }}
-      transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+      transition={{ repeat: 0, duration: 20, ease: "linear" }}
     >
       {[...siteData.yakinOteller, ...siteData.yakinOteller].map((otel, i) => (
         <div
@@ -1077,7 +1077,7 @@ background: scrolled
   {/* GLOW ARKA PLAN */}
   <div
     style={{ background: theme.glow }}
-    className="absolute inset-0 blur-[120px] opacity-30"
+    className="absolute inset-0 blur-[40px] opacity-30"
   />
 
   <div className="relative max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
@@ -1210,8 +1210,8 @@ background: scrolled
     {showBubble && (
       <motion.div
         initial={{ opacity: 0, x: 30 }}
-        animate={{ opacity: 1, x: [0, -6, 0], scale: [1, 1.05, 1] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, repeat: 0 }}
         className="bg-white text-black text-xs px-3 py-2 rounded-lg shadow-lg whitespace-nowrap"
       >
         Hemen yaz
@@ -1234,8 +1234,8 @@ background: scrolled
     {showBubble && (
       <motion.div
         initial={{ opacity: 0, x: 30 }}
-        animate={{ opacity: 1, x: [0, -6, 0], scale: [1, 1.05, 1] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
+       animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, repeat: 0 }}
         className="bg-white text-black text-xs px-3 py-2 rounded-lg shadow-lg whitespace-nowrap"
       >
         Hemen ara
@@ -1258,8 +1258,8 @@ background: scrolled
   {showBubble && (
     <motion.div
       initial={{ opacity: 0, x: 30 }}
-      animate={{ opacity: 1, x: [0, -6, 0], scale: [1, 1.05, 1] }}
-      transition={{ duration: 1.5, repeat: Infinity }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.5, repeat: 0 }}
       className="bg-white text-black text-xs px-3 py-2 rounded-lg shadow-lg whitespace-nowrap"
     >
       Konum

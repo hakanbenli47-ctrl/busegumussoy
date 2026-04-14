@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fff8fb;
+  --foreground: #2a1f24;
+}
+
+/* DARK MODE */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* 🔥 BODY (PREMIUM BACKGROUND) */
+body {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(217,70,122,0.08), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(217,70,122,0.06), transparent 50%),
+    linear-gradient(to bottom, #fff8fb, #ffeef5);
+
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* 🔥 GRAIN TEXTURE */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* 🔥 LIGHT EFFECT */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+
+  background:
+    radial-gradient(circle at 30% 10%, rgba(255,255,255,0.5), transparent 60%),
+    radial-gradient(circle at 70% 90%, rgba(217,70,122,0.1), transparent 70%);
+
+  pointer-events: none;
+}

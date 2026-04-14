@@ -9,7 +9,7 @@ import { siteData as de } from "@/data/de"
 import { siteData as ru } from "@/data/ru"
 import Image from "next/image"
 export default function Home({ params }: { params: { lang: string } }) {
-
+const [step, setStep] = useState(0)
   const theme = themes.kuafor
 const [activeImage, setActiveImage] = useState(0)
 const [activeVideo, setActiveVideo] = useState(0)
@@ -76,7 +76,18 @@ useEffect(() => {
   }, 6000)
 
   return () => clearInterval(interval)
-}, [videoSlides])
+},
+ [videoSlides])
+ useEffect(() => {
+  const timers = [
+    setTimeout(() => setStep(1), 0),     // hero
+    setTimeout(() => setStep(2), 500),   // floating butonlar
+    setTimeout(() => setStep(3), 1000),  // stats
+    setTimeout(() => setStep(4), 1500),  // hizmetler + diğerleri
+  ]
+
+  return () => timers.forEach(clearTimeout)
+}, [])
 useEffect(() => {
   setTimeout(() => {
     const elements = document.querySelectorAll(".reveal")
@@ -115,7 +126,7 @@ useEffect(() => {
 background: scrolled
   ? "rgba(255,255,255,0.95)"
   : "rgba(255,255,255,0.85)",
-backdropFilter: "none",
+    backdropFilter: "blur(12px)",
     borderBottom: scrolled ? "1px solid rgba(0,0,0,0.08)" : "none"
   }}
 >
@@ -239,73 +250,83 @@ backdropFilter: "none",
       }}
     />
 
-    {/* HAREKETLİ BLOB 1 */}
-    <motion.div
-      animate={{
-        x: [0, 40, -30, 0],
-        y: [0, -30, 40, 0],
-        scale: [1, 1.1, 0.9, 1],
-      }}
-      transition={{
-        duration: 12,
-       repeat: 0,
-        ease: "easeInOut",
-      }}
-      className="absolute w-[400px] h-[400px] blur-[40px]"
-      style={{
-        background: theme.primary,
-        top: "-100px",
-        left: "-100px",
-        opacity: 0.2,
-      }}
-    />
+    {/* ANİMASYONLAR */}
+    {step >= 1 && (
+      <>
+        {/* BLOB 1 */}
+        <motion.div
+          animate={{
+            x: [0, 40, -30, 0],
+            y: [0, -30, 40, 0],
+            scale: [1, 1.08, 0.92, 1],
+          }}
+          transition={{
+            duration: 20,
+            repeat: 0,
+            ease: "easeInOut",
+          }}
+          className="absolute w-[400px] h-[400px] blur-[40px]"
+          style={{
+            background: theme.primary,
+            top: "-100px",
+            left: "-100px",
+            opacity: 0.2,
+            willChange: "transform",
+            transform: "translateZ(0)",
+          }}
+        />
 
-    {/* HAREKETLİ BLOB 2 */}
-    <motion.div
-      animate={{
-        x: [0, -50, 30, 0],
-        y: [0, 40, -20, 0],
-        scale: [1, 0.9, 1.1, 1],
-      }}
-      transition={{
-        duration: 14,
-        repeat: 0,
-        ease: "easeInOut",
-      }}
-      className="absolute w-[350px] h-[350px] blur-[40px]"
-      style={{
-        background: theme.glow,
-        bottom: "-100px",
-        right: "-100px",
-        opacity: 0.25,
-      }}
-    />
+        {/* BLOB 2 */}
+        <motion.div
+          animate={{
+            x: [0, -50, 30, 0],
+            y: [0, 40, -20, 0],
+            scale: [1, 0.92, 1.08, 1],
+          }}
+          transition={{
+            duration: 24,
+            repeat: 0,
+            ease: "easeInOut",
+          }}
+          className="absolute w-[350px] h-[350px] blur-[35px]"
+          style={{
+            background: theme.glow,
+            bottom: "-100px",
+            right: "-100px",
+            opacity: 0.25,
+            willChange: "transform",
+            transform: "translateZ(0)",
+          }}
+        />
 
-    {/* ORTA PARLAMA */}
-    <motion.div
-      animate={{
-        opacity: [0.2, 0.35, 0.2],
-        scale: [1, 1.1, 1],
-      }}
-      transition={{
-        duration: 6,
-        repeat: 0,
-        ease: "easeInOut",
-      }}
-      className="absolute w-[300px] h-[300px] blur-[100px]"
-      style={{
-        background: theme.primary,
-        top: "30%",
-        left: "40%",
-      }}
-    />
+        {/* ORTA PARLAMA */}
+        <motion.div
+          animate={{
+            opacity: [0.2, 0.35, 0.2],
+            scale: [1, 1.05, 1],
+          }}
+          transition={{
+            duration: 12,
+            repeat: 0,
+            ease: "easeInOut",
+          }}
+          className="absolute w-[300px] h-[300px] blur-[30px]"
+          style={{
+            background: theme.primary,
+            top: "30%",
+            left: "40%",
+            willChange: "transform, opacity",
+            transform: "translateZ(0)",
+          }}
+        />
+      </>
+    )}
 
   </div>
 
   {/* İÇERİK */}
   <div className="relative z-10 text-center px-6 max-w-2xl">
 
-    {/* ÜST KÜÇÜK BAŞLIK (SLOGAN) */}
     <motion.p
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
@@ -316,7 +337,6 @@ backdropFilter: "none",
       {siteData.genel.slogan}
     </motion.p>
 
-    {/* ANA BAŞLIK */}
     <motion.h1
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
@@ -327,7 +347,6 @@ backdropFilter: "none",
       {siteData.hero.slider[0]?.baslik}
     </motion.h1>
 
-    {/* AÇIKLAMA */}
     <motion.p
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
@@ -338,7 +357,6 @@ backdropFilter: "none",
       {siteData.hero.slider[0]?.aciklama}
     </motion.p>
 
-    {/* BUTONLAR */}
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
@@ -363,41 +381,6 @@ backdropFilter: "none",
       >
         {siteData.hero.buton2}
       </a>
-    </motion.div>
-
-    {/* SOSYAL KANIT */}
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.8 }}
-      className="mt-12 flex justify-center gap-10 text-center"
-    >
-      <div>
-        <p style={{ color: theme.text }} className="text-xl font-semibold">2000+</p>
-        <p style={{ color: theme.text + "99" }} className="text-xs tracking-wide">Mutlu Müşteri</p>
-      </div>
-      <div>
-        <p style={{ color: theme.text }} className="text-xl font-semibold">5+ Yıl</p>
-        <p style={{ color: theme.text + "99" }} className="text-xs tracking-wide">Deneyim</p>
-      </div>
-      <div>
-        <p style={{ color: theme.text }} className="text-xl font-semibold">4.9★</p>
-        <p style={{ color: theme.text + "99" }} className="text-xs tracking-wide">Memnuniyet</p>
-      </div>
-    </motion.div>
-
-    {/* SCROLL */}
-    <motion.div
-      onClick={() => {
-        const el = document.getElementById("hizmetler")
-        if (el) el.scrollIntoView({ behavior: "smooth" })
-      }}
-    
-      transition={{ repeat: 0, duration: 1.5 }}
-      style={{ color: theme.text + "99" }}
-      className="mt-14 text-xs tracking-widest cursor-pointer hover:opacity-100 transition"
-    >
-      ↓ KEŞFET
     </motion.div>
 
   </div>
@@ -463,7 +446,7 @@ backdropFilter: "none",
     <motion.div
       className="flex gap-4 whitespace-nowrap"
       animate={{ x: ["0%", "-50%"] }}
-      transition={{ repeat: 0, duration: 20, ease: "linear" }}
+      transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
     >
       {[...siteData.yakinOteller, ...siteData.yakinOteller].map((otel, i) => (
         <div
@@ -1077,7 +1060,7 @@ backdropFilter: "none",
   {/* GLOW ARKA PLAN */}
   <div
     style={{ background: theme.glow }}
-    className="absolute inset-0 blur-[40px] opacity-30"
+    className="absolute inset-0 blur-[120px] opacity-30"
   />
 
   <div className="relative max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
@@ -1210,8 +1193,8 @@ backdropFilter: "none",
     {showBubble && (
       <motion.div
         initial={{ opacity: 0, x: 30 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, repeat: 0 }}
+        animate={{ opacity: 1, x: [0, -6, 0], scale: [1, 1.05, 1] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
         className="bg-white text-black text-xs px-3 py-2 rounded-lg shadow-lg whitespace-nowrap"
       >
         Hemen yaz
@@ -1234,8 +1217,8 @@ backdropFilter: "none",
     {showBubble && (
       <motion.div
         initial={{ opacity: 0, x: 30 }}
-       animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, repeat: 0 }}
+        animate={{ opacity: 1, x: [0, -6, 0], scale: [1, 1.05, 1] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
         className="bg-white text-black text-xs px-3 py-2 rounded-lg shadow-lg whitespace-nowrap"
       >
         Hemen ara
@@ -1258,8 +1241,8 @@ backdropFilter: "none",
   {showBubble && (
     <motion.div
       initial={{ opacity: 0, x: 30 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1.5, repeat: 0 }}
+      animate={{ opacity: 1, x: [0, -6, 0], scale: [1, 1.05, 1] }}
+      transition={{ duration: 1.5, repeat: Infinity }}
       className="bg-white text-black text-xs px-3 py-2 rounded-lg shadow-lg whitespace-nowrap"
     >
       Konum
